@@ -4,8 +4,8 @@ After=network.target
 
 [Service]
 Type=simple
-WorkingDirectory=/home/pi/notes-app
-ExecStart=/home/jakob/notes-app/.venv/bin/python app.py
+WorkingDirectory=/home/jakob/pinotes
+ExecStart=/home/jakob/pinotes/.venv/bin/python app.py
 Restart=on-failure
 RestartSec=5
 
