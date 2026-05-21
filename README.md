@@ -1,24 +1,30 @@
-# Notizen App – Setup auf dem Raspberry Pi
+# pinotes – Notizen App
 
-## 1. Dateien kopieren
+## 1. Voraussetzungen
+
+- [uv](https://docs.astral.sh/uv/) installieren: `curl -LsSf https://astral.sh/uv/install.sh | sh`
+- Python 3.13+
+
+## 2. Dateien kopieren
 
 ```bash
-scp -r notes-app/ pi@<PI-IP>:~/
+scp -r pinotes/ pi@<PI-IP>:~/
 ```
 
 Oder per Git / USB auf den Pi bringen.
 
-## 2. Flask installieren
+## 3. Abhängigkeiten installieren
 
 ```bash
-pip3 install -r requirements.txt
+cd ~/pinotes
+uv sync
 ```
 
-## 3. App starten (Testlauf)
+## 4. App starten (Testlauf)
 
 ```bash
-cd ~/notes-app
-python3 app.py
+cd ~/pinotes
+uv run python app.py
 ```
 
 Aufruf im Browser (Handy im selben Tailscale-Netz):
@@ -26,26 +32,25 @@ Aufruf im Browser (Handy im selben Tailscale-Netz):
 http://<PI-TAILSCALE-IP>:5000
 ```
 
-## 4. Als Systemdienst einrichten (autostart)
+## 5. Als Systemdienst einrichten (Autostart)
 
 ```bash
-sudo cp notes-app.service /etc/systemd/system/
+sudo cp pinotes.service /etc/systemd/system/
 sudo systemctl daemon-reload
-sudo systemctl enable notes-app
-sudo systemctl start notes-app
+sudo systemctl enable --now pinotes
 ```
 
 Status prüfen:
 ```bash
-sudo systemctl status notes-app
+sudo systemctl status pinotes
 ```
 
 Logs anschauen:
 ```bash
-journalctl -u notes-app -f
+sudo journalctl -u pinotes -f
 ```
 
-## 5. Farben anpassen
+## 6. Farben anpassen
 
 Öffne `templates/index.html` und ändere die Variablen ganz oben im `<style>`-Block:
 
@@ -57,7 +62,7 @@ journalctl -u notes-app -f
 }
 ```
 
-## 6. Neue Formatier-Buttons hinzufügen
+## 7. Neue Formatier-Buttons hinzufügen
 
 In `index.html` im Toolbar-Bereich einfach einen neuen Button ergänzen:
 
