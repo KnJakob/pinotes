@@ -1,0 +1,13 @@
+[Unit]
+Description=Notizen App – Flask-based notes app
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/pi/notes-app
+ExecStart=/home/jakob/notes-app/.venv/bin/python app.py
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target
