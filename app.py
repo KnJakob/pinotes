@@ -3,6 +3,7 @@ import json
 import os
 import uuid
 from datetime import datetime
+from backup_daemon import start_daily_backup_scheduler
 
 app = Flask(__name__)
 
@@ -195,4 +196,5 @@ def move_note(note_id):
 
 
 if __name__ == "__main__":
+    start_daily_backup_scheduler()
     app.run(host="0.0.0.0", port=5000, debug=False)
