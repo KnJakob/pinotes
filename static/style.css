@@ -28,11 +28,14 @@
   --font-ui:         'SF Pro Display', -apple-system, 'Helvetica Neue', sans-serif;
   --font-editor:     'SF Pro Text', -apple-system, 'Helvetica Neue', sans-serif;
 
+  --heading-h1:      #da4167;   /* Überschrift H1 */
+  --heading-h2:      #8a1c7c;   /* Überschrift H2 */
+  --heading-h3:      #9883e5;   /* Überschrift H3 */
+
   --panel-width:     320px;
   --toolbar-height:  52px;
   --save-delay:      800;        /* ms bis auto-save        */
 }
-
 /* ═══════════════════════════════════════════════
    RESET & BASE
    ═══════════════════════════════════════════════ */
@@ -228,6 +231,18 @@ button {
 #editor b, #editor strong { font-weight: 700; }
 #editor i, #editor em { font-style: italic; }
 #editor u { text-decoration: underline; }
+
+h1 {
+	color: var(--heading-h1);
+}
+
+h2 {
+	color: var(--heading-h2);
+}
+
+h3 {
+	color: var(--heading-h3);
+}
 
 /* ═══════════════════════════════════════════════
    SIDE PANEL (Ordner + Notizen)
