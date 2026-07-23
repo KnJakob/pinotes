@@ -193,6 +193,10 @@ function fmt(cmd, value = null) {
   if(cmd == 'insertHTML' && value == 'input') {
     value = '<input type="checkbox" class="checkbox">';
   }
+  if (cmd === 'formatBlock' && value) {
+    const isActive = isHeadingActive(value.toUpperCase());
+    value = isActive ? 'p' : value;
+  }
 
   document.getElementById('editor').focus();
   document.execCommand(cmd, false, value);
@@ -235,6 +239,21 @@ function updateHeadingButtons() {
   ['fmt-h1', 'fmt-h2', 'fmt-h3'].forEach(id => {
     document.getElementById(id).classList.remove('active');
   });
+}
+
+function isHeadingActive(tag) {
+  const editor = document.getElementById('editor');
+  const selection = window.getSelection();
+  if (!selection.rangeCount) return false;
+
+  let node = selection.getRangeAt(0).startContainer;
+  if (node.nodeType === Node.TEXT_NODE) node = node.parentElement;
+
+  while (node && node !== editor) {
+    if (node.tagName === tag) return true;
+    node = node.parentElement;
+  }
+  return false;
 }
 
 /* ═══════════════════════════════════════════════
