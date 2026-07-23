@@ -190,6 +190,10 @@ function showSaveIndicator() {
    (hier neue Formatierungen ergänzen)
    ═══════════════════════════════════════════════ */
 function fmt(cmd, value = null) {
+  if(cmd == 'insertHTML' && value == 'input') {
+    value = '<input type="checkbox" class="checkbox">';
+  }
+
   document.getElementById('editor').focus();
   document.execCommand(cmd, false, value);
   updateFmtButtons();
