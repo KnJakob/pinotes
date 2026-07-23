@@ -201,6 +201,36 @@ function updateFmtButtons() {
   document.getElementById('fmt-italic').classList.toggle('active', document.queryCommandState('italic'));
   document.getElementById('fmt-ul').classList.toggle('active',     document.queryCommandState('insertUnorderedList'));
   document.getElementById('fmt-ol').classList.toggle('active',     document.queryCommandState('insertOrderedList'));
+  updateHeadingButtons();
+}
+
+function updateHeadingButtons() {
+  const selection = window.getSelection();
+  if (!selection.rangeCount) {
+    ['fmt-h1', 'fmt-h2', 'fmt-h3'].forEach(id => {
+      document.getElementById(id).classList.remove('active');
+    });
+    return;
+  }
+
+  const container = selection.getRangeAt(0).startContainer;
+  let element = container.nodeType === Node.TEXT_NODE ? container.parentElement : container;
+
+  // Traverse up to find heading or paragraph
+  while (element && element !== document.getElementById('editor')) {
+    if (element.tagName === 'H1' || element.tagName === 'H2' || element.tagName === 'H3') {
+      ['fmt-h1', 'fmt-h2', 'fmt-h3'].forEach((id, index) => {
+        document.getElementById(id).classList.toggle('active', element.tagName === `H${index + 1}`);
+      });
+      return;
+    }
+    element = element.parentElement;
+  }
+
+  // Default to paragraph (no heading active)
+  ['fmt-h1', 'fmt-h2', 'fmt-h3'].forEach(id => {
+    document.getElementById(id).classList.remove('active');
+  });
 }
 
 /* ═══════════════════════════════════════════════
