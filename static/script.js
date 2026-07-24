@@ -165,6 +165,9 @@ async function saveCurrentNote() {
   if (!currentNoteId || !isDirty) return;
   isDirty = false;
   clearTimeout(saveTimer);
+  document.querySelectorAll('#editor input[type="checkbox"]').forEach(cb => {
+    cb.checked ? cb.setAttribute('checked', '') : cb.removeAttribute('checked');
+  });
   const title = document.getElementById('note-title-input').value.trim() || 'Ohne Titel';
   const content = document.getElementById('editor').innerHTML;
   const note = await api(`/notes/${currentNoteId}`, 'PUT', { title, content });
